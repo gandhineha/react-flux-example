@@ -1,0 +1,43 @@
+{
+  "name": "react-webpack",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "author": "",
+  "license": "ISC",
+  "scripts": {
+    "build": "NODE_ENV=build webpack --progress --colors",
+    "dev": "NODE_ENV=build webpack --watch --progress --colors",
+    "hot": "NODE_ENV=development webpack-dev-server --devtool eval --hot --progress --colors --content-base build",
+    "deploy": "NODE_ENV=production webpack -p --progress --colors"
+  },
+  "dependencies": {
+    "autoprefixer-core": "^5.1.11",
+    "babel-core": "^5.1.13",
+    "babel-loader": "^5.0.0",
+    "css-loader": "^0.12.0",
+    "es6-loader": "^0.2.0",
+    "file-loader": "^0.8.1",
+    "hammerjs": "^2.0.4",
+    "jsx-loader": "^0.13.1",
+    "less": "^2.5.0",
+    "less-loader": "^2.2.0",
+    "node-sass": "^2.1.1",
+    "postcss": "^4.1.6",
+    "postcss-loader": "^0.4.1",
+    "react": "^0.13.2",
+    "react-selectable": "^0.1.3",
+    "react-tap-event-plugin": "^0.1.6",
+    "sass-loader": "^0.6.0",
+    "socket.io-client": "^1.3.5",
+    "style-loader": "^0.12.1",
+    "superagent": "^1.2.0",
+    "url-loader": "^0.5.5",
+    "webpack": "^1.8.10"
+  },
+  "devDependencies": {
+    "html-webpack-plugin": "^1.3.0",
+    "image-webpack-loader": "^1.4.0",
+    "imagemin": "^3.1.0"
+  }
+}

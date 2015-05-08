@@ -3,3 +3,5 @@ content.tar
 pkg
 bin
 npm-debug.log
+src/github.com
+src/golang.org
