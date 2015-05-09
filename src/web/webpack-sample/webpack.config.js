@@ -1,4 +1,5 @@
 var bower_dir = __dirname + '/bower_components';
+var node_modules_dir = __dirname + '/node_modules';
 var autoprefixer = require('autoprefixer-core');
 var webpack = require("webpack");
 var HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -10,7 +11,8 @@ var plugins = [
     $: "jquery",
     jQuery: "jquery",
     "window.jQuery": "jquery",
-    "root.jQuery": "jquery"
+    "root.jQuery": "jquery",
+    alt: "alt"
   }),
   new webpack.optimize.CommonsChunkPlugin('vendors', 'vendors.js')
 ];
@@ -77,7 +79,8 @@ var config = {
       'materialize': bower_dir + '/materialize/dist/js/materialize.js',
       'materialize.css': bower_dir + '/materialize/dist/css/materialize.min.css',
       'jquery': bower_dir + '/jquery/dist/jquery.js',
-      'socket.io-client' : bower_dir + '/socket.io-client/socket.io.js'
+      'socket.io-client' : bower_dir + '/socket.io-client/socket.io.js',
+      'alt' : node_modules_dir + '/alt/dist/alt.js'
     },
     extensions: ['', '.jsx', '.js', '.sass', '.scss']
   },

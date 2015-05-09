@@ -1,69 +1,48 @@
 /* jshint esnext: true */
 
-import React from 'react';
-import Request from 'superagent';
-import Socket from 'socket.io-client'
+'use strict';
 
-function GetData(){
-  return new Promise((resolve, reject) => {
-      Request.get('/web/data.json').end((err, resp)=> {
-        if (err === null){
-          resolve(resp)
-        }else{
-          reject(err)
-        }
-      })
-    })
-}
+import React from 'react';
+import MessageCommands from './message-commands'
+import MessageReadModel from './message-read-model'
 
 class SharedCounter extends React.Component{
   constructor(props){
     super(props)
+    var self = this
+    this.state = MessageReadModel.getState().data
+    console.log(this.state)
+    this.updateHandler = ()=> self.refreshData()
   }
 
-  getData(){
-    var self = this
-    this.setState({loading:true, data:"loading"})
-    GetData().then((resp)=> {
-      self.setState({loading:false, data: resp.body})
-    })
+  refreshData(){
+    this.setState(MessageReadModel.getState().data)
   }
 
   componentWillMount(){
-    this.getData()
-    var self = this
+    MessageReadModel.listen(this.updateHandler)
+  }
 
-    var connection = Socket.connect("http://localhost:8001", { path: "/web/socket.io/" })
-    connection.on("connect", function(){
-      console.log("socket connected")
-    })
-    connection.on("update", function(content){
-      console.log(content)
-      // self.setState({loading:false, data: content})
-      self.getData()
-    })
+  componentWillUnmount(){
+    MessageReadModel.unlisten(this.updateHandler)
   }
 
   onClick(){
-    Request
-    .post('/web/incr')
-    .send({Count:1})
-    .set('Accept', 'application/json')
-    .end((err, resp)=>{
-        if(err !== null){
-          console.log(err)
-        }
-    })
+    MessageCommands.updateCounter(1)
   }
 
   render(){
     return  <div>
-              <h1>{this.state.data.Message}</h1>
-              <h2>{this.state.data.Count}</h2>
-              <button onClick={this.onClick}>Incr</button>
+              <h1>Shared Counter</h1>
+              <p>Open multiple browser windows/tabs to see the counter updated in real time using ReactJS + Flux/Alt</p>              
+              <h2>{this.state.Message}</h2>
+              <h2>{this.state.Count}</h2>
+              <button onClick={this.onClick}>Increment counter</button>
             </div>
   }
 }
+
+MessageCommands.connectToPush()
 
 React.render(<SharedCounter />, document.body);
 
