@@ -1,10 +1,11 @@
 # Setup
 
-1. Build web binary
+1.  Build web binary
 ```bash
+export GOPATH=$PWD
 go get web
 ```
-2. Install web dependencies
+2.  Install web dependencies
 ```bash
 npm install -g webpack
 npm install -g bower
@@ -13,16 +14,18 @@ npm install
 bower install
 ```
 
-3. Build web project
+3.  Build web project
 ```bash
 cd src/web/webpack-sample
 npm install
-npm run build
+bower install
+npm run deploy
 ```
 
-4. Run web application
+4.  Run web application
 ```bash
-./bin/web
+cd -
+./bin/web -content-directory=./src/web/webpack-sample/dist/
 ```
 
-5. Browse to http://localhost:8001/web/
+5.  Open multiple browser windows http://localhost:8001/web/
