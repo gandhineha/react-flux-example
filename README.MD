@@ -21,7 +21,7 @@ npm install
 bower install
 npm run deploy
 ```
-
+ 
 4.  Run web application
 ```bash
 cd -
