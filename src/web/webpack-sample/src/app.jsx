@@ -33,8 +33,6 @@ class SharedCounter extends React.Component{
 
   render(){
     return  <div>
-              <h1>Shared Counter</h1>
-              <p>Open multiple browser windows/tabs to see the counter updated in real time using ReactJS + Flux/Alt</p>              
               <h2>{this.state.Message}</h2>
               <h2>{this.state.Count}</h2>
               <button onClick={this.onClick}>Increment counter</button>
@@ -42,9 +40,29 @@ class SharedCounter extends React.Component{
   }
 }
 
+class App extends React.Component{
+  render(){
+    return <div className="container">
+              <h1>Shared Counter</h1>
+              <p>Open multiple browser windows/tabs to see the counter updated in real time using ReactJS + Flux/Alt</p>
+              <div className="row">
+                <div className="col s4">
+                  <SharedCounter />
+                </div>
+                <div className="col s4">
+                  <SharedCounter />
+                </div>
+                <div className="col s4">
+                  <SharedCounter />
+                </div>
+              </div>
+           </div>
+  }
+}
+
 MessageCommands.connectToPush()
 
-React.render(<SharedCounter />, document.body);
+React.render(<App />, document.body);
 
 // If hot swapping can be done, do it by resolving the current route
 // and render the application again
