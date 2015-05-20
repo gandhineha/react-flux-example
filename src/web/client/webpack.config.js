@@ -1,5 +1,6 @@
 var bower_dir = __dirname + '/bower_components';
 var node_modules_dir = __dirname + '/node_modules';
+var client_dir = __dirname + '/src/';
 var autoprefixer = require('autoprefixer-core');
 var webpack = require("webpack");
 var HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -14,7 +15,7 @@ var plugins = [
     "root.jQuery": "jquery",
     alt: "alt"
   }),
-  new webpack.optimize.CommonsChunkPlugin('vendors', 'vendors.js')
+  //new webpack.optimize.CommonsChunkPlugin('vendors', 'vendors.js')
 ];
 
 //if(process.env.NODE_ENV === 'production'){
@@ -80,13 +81,17 @@ var config = {
       'materialize.css': bower_dir + '/materialize/dist/css/materialize.min.css',
       'jquery': bower_dir + '/jquery/dist/jquery.js',
       'socket.io-client' : bower_dir + '/socket.io-client/socket.io.js',
-      'alt' : node_modules_dir + '/alt/dist/alt.js'
+      'alt' : node_modules_dir + '/alt/dist/alt.js',
+      //'custom-css': client_dir + 'stylesheets/react-treeview.css'
+      'react-treeview': bower_dir + '/react-treeview/react-treeview.js',
+      'react-treeview.css': bower_dir + '/react-treeview/react-treeview.css',
+      'formsy-react':bower_dir + '/formsy-react/release/formsy-react.js'
     },
-    extensions: ['', '.jsx', '.js', '.sass', '.scss']
+    extensions: ['', '.jsx', '.js', '.sass', '.scss', '.js.map']
   },
   entry: {
-    app: process.env.NODE_ENV === 'development' ? ['webpack/hot/dev-server','./src/app.jsx'] : ['./src/app.jsx'],
-    vendors: ['materialize', 'materialize.css', 'jquery']
+    app: ['./src/app.jsx'],
+    //vendors: ['materialize', 'materialize.css', 'jquery', 'react-treeview.css']
   },
   output: {
     // If in production mode we put the files into the dist folder instead

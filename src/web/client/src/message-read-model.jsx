@@ -1,5 +1,6 @@
-import Alt from './alt-app'
-import MessageCommands from './message-commands'
+/* jshint esnext: true */
+import Alt from './alt-app';
+import MessageCommands from './message-commands';
 import Request from 'superagent';
 
 class MessageReadModel{
@@ -9,12 +10,12 @@ class MessageReadModel{
     });
 
     this.data = { "Message": "loading...","Count":"..."};
-    MessageCommands.getData()    
+    MessageCommands.getData();
   }
 
   dataReceived({ data }) {
-    console.log("Readmode updated")
-    this.setState({data: data})
+    console.log("Readmode updated");
+    this.setState({data: data});
   }
 }
 
