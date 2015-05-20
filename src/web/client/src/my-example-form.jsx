@@ -1,125 +1,103 @@
 /* jshint esnext: true */
-import React from 'react';
-import Formsy from 'formsy-react';
+var React = require('react');
+import './stylesheets/my-example-form.css';
+//var Formsy = require('formsy-react');
+   var Adaptive_Input = React.createClass({
+     handle_change: function(){
+       var new_text = this.refs.input.getDOMNode().value;
+       this.props.on_Input_Change(new_text);
+     },
+     render: function(){
+       return (
+           <div className='adaptive_placeholder_input_container'>
+             <input
+               className="adaptive_input"
+               type="text"
+               required="required"
+               onChange= {this.handle_change}
+               ref="input"
+             ></input>
+             <label
+               className="adaptive_placeholder"
+               alt={this.props.initial}
+               placeholder={this.props.focused}
+             ></label>
+           </div>
+           );
+     }
+   });
 
-var currentYear = new Date().getFullYear();
+   var Form = React.createClass({
+     render: function(){
+       return (
+           <form>
+             <Adaptive_Input
+               initial={'Name Input'}
+               focused={'Name Input'}
+               on_Input_Change={this.props.handle_text_input}
+             />
+             <Adaptive_Input
+             initial={'Value 1'}
+             focused={'Value 1'}
+               on_Input_Change={this.props.handle_value_1_input}
+             />
+             <Adaptive_Input
+               initial={'Value 2'}
+               focused={'Value 2'}
+               on_Input_Change={this.props.handle_value_2_input}
+             />
+           </form>
+           );
+     }
+   });
 
-var validators = {
-  time: {
-    regexp: /^(([0-1]?[0-9])|([2][0-3])):([0-5]?[0-9])(:([0-5]?[0-9]))?$/,
-    message: 'Not valid time'
-  },
-  decimal: {
-    regexp: /(^\d*\.?\d*[0-9]+\d*$)|(^[0-9]+\d*\.\d*$)/,
-    message: 'Please type decimal value'
-  },
-  binary: {
-    regexp: /^([0-1])*$/,
-    message: '10101000'
-  }
-};
+   var Page = React.createClass({
+     getInitialState: function(){
+       return {
+         Name : "No Name",
+         Value_1 : '0',
+         Value_2 : '0',
+         Display_Value: '0'
+       };
+     },
+     handle_text_input: function(new_text){
+       this.setState({
+           Name: new_text
+         });
+     },
+     handle_value_1_input: function(new_value){
+       new_value = parseInt(new_value);
+       var updated_display = new_value + parseInt(this.state.Value_2);
+       updated_display = updated_display.toString();
+       this.setState({
+           Value_1: new_value,
+           Display_Value: updated_display
+         });
+     },
+     handle_value_2_input: function(new_value){
+       new_value = parseInt(new_value);
+       var updated_display = parseInt(this.state.Value_1) + new_value;
+       updated_display = updated_display.toString();
+       this.setState({
+           Value_2: new_value,
+           Display_Value: updated_display
+         });
+     },
+     render: function(){
+       return(
+           <div>
+             <h2>{this.state.Name}</h2>
+             <h2 className='test'>Value 1 + Value 2 = {this.state.Display_Value}</h2>
+             <Form
+               handle_text_input={this.handle_text_input}
+               handle_value_1_input = {this.handle_value_1_input}
+               handle_value_2_input = {this.handle_value_2_input}
+             />
 
-Formsy.addValidationRule('isYearOfBirth', function (values, value) {
-  value = parseInt(value);
-  if (typeof value !== 'number' || value !== value) {
-    return false;
-  }
-  return value < currentYear && value > currentYear - 130;
-});
+           </div>
+       );
+     }
+   });
 
-var MyAppForm = React.createClass({
-  submit: function (data) {
-    alert(JSON.stringify(data, null, 4));
-  },
-  render: function () {
-    return (
-      <Formsy.Form onSubmit={this.submit} className="custom-validation">
-        <MyOwnInput name="year" title="Year of Birth" type="number" validations="isYearOfBirth" validationError="Please type your year of birth" />
-        <DynamicInput name="dynamic" title="..." type="text" />
-        <button type="submit">Submit</button>
-      </Formsy.Form>
-    );
-  }
-});
-
-var MyOwnInput = React.createClass({
-  mixins: [Formsy.Mixin],
-  changeValue: function (event) {
-    this.setValue(event.currentTarget.value);
-  },
-  render: function () {
-    var className = this.props.className + ' ' + (this.showError() ? 'error' : null);
-    var errorMessage = this.getErrorMessage();
-
-    return (
-      <div className='form-group'>
-        <label htmlFor={this.props.name}>{this.props.title}</label>
-        <input type={this.props.type || 'text'} name={this.props.name} onChange={this.changeValue} value={this.getValue()}/>
-        <span className='validation-error'>{errorMessage}</span>
-      </div>
-    );
-  }
-});
-
-var DynamicInput = React.createClass({
-  mixins: [Formsy.Mixin],
-  getInitialState: function() {
-    return {
-      validationType: 'time'
-    };
-  },
-  changeValue: function (event) {
-    this.setValue(event.currentTarget.value);
-  },
-  changeValidation: function(validationType) {
-    this.setState({
-      validationType: validationType
-    });
-    this.setValue(this.getValue());
-  },
-  validate: function () {
-    var value = this.getValue();
-    return value === '' ? true : validators[this.state.validationType].regexp.test(value);
-  },
-  getCustomErrorMessage: function() {
-    return this.showError() ? validators[this.state.validationType].message : '';
-  },
-  render: function () {
-    var className = this.props.className + ' ' + (this.showError() ? 'error' : null);
-    var errorMessage = this.getCustomErrorMessage();
-
-    return (
-      <div className='form-group'>
-        <label htmlFor={this.props.name}>{this.props.title}</label>
-        <input type={this.props.type || 'text'} name={this.props.name} onChange={this.changeValue} value={this.getValue()}/>
-        <span className='validation-error'>{errorMessage}</span>
-        <Validations validationType={this.state.validationType} changeValidation={this.changeValidation}/>
-      </div>
-    );
-  }
-});
-
-var Validations = React.createClass({
-  changeValidation: function(e) {
-    this.props.changeValidation(e.target.value);
-  },
-  render: function() {
-    return (
-      <fieldset onChange={this.changeValidation}>
-        <legend>Validation Type</legend>
-        <div>
-          <input name='validaionType' type='radio' value='time' checked={this.props.validationType === 'time'}/>Time
-        </div>
-        <div>
-          <input name='validaionType' type='radio' value='decimal' checked={this.props.validationType === 'decimal'}/>Decimal
-        </div>
-        <div>
-          <input name='validaionType' type='radio' value='binary' checked={this.props.validationType === 'binary'}/>Binary
-        </div>
-      </fieldset>
-    );
-  }
-});
-
-
-modules.export = MyAppForm;
+//React.renderComponent(<Page />, document.body);
+module.exports = Page;

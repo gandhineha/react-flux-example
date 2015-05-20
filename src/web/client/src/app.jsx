@@ -14,9 +14,7 @@ import DoxHeader from './layout/header';
 import DoxFooter from './layout/footer';
 import DoxSubContent from './layout/sub-content';
 import TestSection from './test-section';
-
-
-//import MyAppForm from './my-example-form';
+import Page from './my-example-form';
 //import MyAppForm from './my-example-form';
 //import MyTreeView from './tree-view';
 //import TreeControl from './tree-view';
@@ -74,11 +72,13 @@ class App extends React.Component{
               <li><Link to="app">Dashboard</Link></li>
               <li><Link to="inbox">Inbox</Link></li>
               <li><Link to="counterControl">Counter</Link></li>
-
+              <li><Link to="page">Form</Link></li>
              Login
              <TreeControl dataSource={dataSource} />
+
               <RouteHandler/>
           </div>
+
           <div className="row center">
             <a href="http://materializecss.com/getting-started.html" id="download-button" className="btn-large waves-effect waves-light orange">Get Started</a>
           </div>
@@ -189,6 +189,7 @@ var routes = (
     <Route name="test" handler={TestSection}>
     </Route>
     <Route name="inbox" handler={Inbox}/>
+    <Route name="page" handler={Page}/>
     <Route name="weatherControl" handler={WeatherControl}/>
     <Route name="counterControl" handler={CounterControl}/>
     <NotFoundRoute handler={InboxNotFound}/>

@@ -1,9 +1,9 @@
 {
   "name": "react-webpack",
   "version": "0.0.0",
-  "homepage": "https://github.com/andrewwebber/webpack-sample",
+  "homepage": "https://github.com/gandhineha/react-flux-example.git",
   "authors": [
-    "andrew <andrewvwebber@googlemail.com>"
+    "neha <neha.gandhi@brainloop.com>"
   ],
   "license": "MIT",
   "dependencies": {
