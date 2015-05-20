@@ -43,6 +43,7 @@
 }
 .adaptive_input:invalid + .adaptive_placeholder:before {
 	content: attr(alt);
+  
 	box-shadow: none;
 }
 .adaptive_input + .adaptive_placeholder {
