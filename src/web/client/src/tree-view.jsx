@@ -1,23 +1,7 @@
 /* jshint esnext: true */
 
 import React from 'react';
-var dataSource = [
-  {
-    type: 'Employees',
-    collapsed: false,
-    people: [
-      {name: 'Paul Gordon', age: 25, sex: 'male', role: 'coder', collapsed: false},
-      {name: 'Sarah Lee', age: 23, sex: 'female', role: 'jqueryer', collapsed: false},
-    ]
-  },
-  {
-    type: 'CEO',
-    collapsed: false,
-    people: [
-      {name: 'Drew Anderson', age: 35, sex: 'male', role: 'boss', collapsed: false}
-    ]
-  }
-];
+import TreeView from 'react-treeview';
 
 //import './stylesheets/treeview.css';
 //requireCSS ("../stylesheets/treeview.css");
@@ -25,9 +9,27 @@ var dataSource = [
 //import treeview-css from './stylesheets/treeview.css';
 class MyTreeView extends React.Component{
   render(){
+    var dataSource = [
+      {
+        type: 'Employees',
+        collapsed: false,
+        people: [
+          {name: 'Paul Gordon', age: 25, sex: 'male', role: 'coder', collapsed: false},
+          {name: 'Sarah Lee', age: 23, sex: 'female', role: 'jqueryer', collapsed: false},
+        ]
+      },
+      {
+        type: 'CEO',
+        collapsed: false,
+        people: [
+          {name: 'Drew Anderson', age: 35, sex: 'male', role: 'boss', collapsed: false}
+        ]
+      }
+    ];
+
     return (
       <div>
-        {this.props.dataSource.map(function(node, i) {
+        {dataSource.map(function(node, i) {
           var type = node.type;
           var label = <span className="node">{type}</span>;
           return (
@@ -51,9 +53,7 @@ class MyTreeView extends React.Component{
 }
 
 module.exports = MyTreeView;
-React.render(
-  <MyTreeView dataSource={dataSource} />
-);
+//React.renderComponent(<MyTreeView dataSource={dataSource} />, document.body);
 // For the sake of simplicity, we're gonna use `defaultCollapsed`. Usually, a
 // [controlled component](http://facebook.github.io/react/docs/forms.html#controlled-components)
 // is preferred.

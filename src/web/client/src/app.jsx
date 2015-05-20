@@ -16,7 +16,7 @@ import DoxSubContent from './layout/sub-content';
 import TestSection from './test-section';
 import Page from './my-example-form';
 //import MyAppForm from './my-example-form';
-//import MyTreeView from './tree-view';
+import MyTreeView from './tree-view';
 //import TreeControl from './tree-view';
 
 class SharedCounter extends React.Component{
@@ -73,8 +73,9 @@ class App extends React.Component{
               <li><Link to="inbox">Inbox</Link></li>
               <li><Link to="counterControl">Counter</Link></li>
               <li><Link to="page">Form</Link></li>
+              <li><Link to="treeview" >Treecontrol</Link></li>
              Login
-             <TreeControl dataSource={dataSource} />
+
 
               <RouteHandler/>
           </div>
@@ -91,6 +92,7 @@ class App extends React.Component{
   }
 }
 
+// <TreeControl dataSource={dataSource} />
 var Dashboard = React.createClass({
   render: function () {
     return (
@@ -192,6 +194,7 @@ var routes = (
     <Route name="page" handler={Page}/>
     <Route name="weatherControl" handler={WeatherControl}/>
     <Route name="counterControl" handler={CounterControl}/>
+    <Route name="treeview" handler={MyTreeView}/>
     <NotFoundRoute handler={InboxNotFound}/>
     <DefaultRoute handler={Dashboard}/>
   </Route>
